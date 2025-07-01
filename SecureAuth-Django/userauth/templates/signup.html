@@ -1,0 +1,86 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Signup{% endblock %}
+
+{% block content %}
+
+<div class="sign-up">
+
+    <div class="page-wrapper">
+        <div class="form-card">
+        <h2>Create an Account</h2>
+
+		 {% if messages %}
+			{% for message in messages %}
+				<p style="color: red;">{{ message }}</p>
+			{% endfor %}
+		{% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <!-- {{ form.as_p }} -->
+                
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"> <i class="fa fa-user"></i> </span>
+					</div>
+					<input name="username" class="form-control" placeholder="Full name" type="text" required>
+				</div> <!-- form-group// -->
+
+
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+					</div>
+					<input name="email" class="form-control" placeholder="Email address" type="email" required>
+				</div> <!-- form-group// -->
+
+
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+					</div>
+					<select class="custom-select" style="max-width: 120px;">
+						<option selected="">+91</option>						
+					</select>
+					<input name="phone" class="form-control" placeholder="Phone number" type="phone" required>
+				</div> <!-- form-group// -->
+
+
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"> <i class="fa fa-building"></i> </span>
+					</div>		
+				</div> <!-- form-group end.// -->
+
+
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+					</div>
+					<input name="password" class="form-control" placeholder="Create password" type="password" required>
+				</div> <!-- form-group// -->
+
+
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+					</div>
+					<input name="confirm_password" class="form-control" placeholder="Repeat password" type="password" required>
+				</div> <!-- form-group// -->                                      
+				
+
+				<button type="submit">Register</button>
+				<p class="form-footer">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+
+			</form>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
+

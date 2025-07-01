@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <h2>Edit Profile</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Email:</label><br>
+            <input type="email" name="email" value="{{ request.user.email }}" required><br><br>
+        <button type="submit">Update</button>
+    </form>
+</div>
+
+{% endblock %}
