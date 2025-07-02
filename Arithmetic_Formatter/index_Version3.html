@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Arithmetic Arranger</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Arithmetic Arranger</h1>
+  <form id="arrangerForm">
+    <label for="problems">Enter arithmetic problems (one per line):</label><br>
+    <textarea id="problems" rows="6" cols="40" placeholder="32 + 698&#10;3801 - 2&#10;45 + 43&#10;123 + 49"></textarea><br><br>
+    <label>
+      <input type="checkbox" id="showAnswers"> Show Answers
+    </label>
+    <br><br>
+    <button type="submit">Arrange</button>
+  </form>
+  <pre id="output"></pre>
+  <script src="script.js"></script>
+</body>
+</html>

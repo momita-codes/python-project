@@ -1,6 +1,6 @@
 def add_time(start, duration, starting_day=None):
     days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-    
+
     # Split start time
     time_part, period = start.split()
     start_hour, start_minute = map(int, time_part.split(':'))
