@@ -23,3 +23,8 @@ Welcome to my curated collection of Python-based projects — ranging from begin
   - Profile edit
   - CSRF protection
   - Custom UI with static styling
+
+### 4. ⏰ Digital Clock
+- A Python-based digital clock using `tkinter`.
+- Displays current time dynamically.
+- A quick UI/UX mini project for beginners.
