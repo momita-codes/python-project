@@ -1,53 +1,79 @@
-def arithmetic_arranger(problems, display_answers=False):
-    if len(problems) > 5:
-        return "Error: Too many problems."
+def arithmetic_arranger(problems, answers=False):
+    if len(problems) > 3:
+        return "Error: Too many problems (maximum is 3)."
 
-    first_line = ""
-    second_line = ""
-    dashes = ""
-    results = ""
+    operations = {
+        '+': lambda nums: str(nums[0] + nums[1]),
+        '-': lambda nums: str(nums[0] - nums[1]),
+    }
 
-    for i, problem in enumerate(problems):
-        parts = problem.split()
+    first_line = []
+    second_line = []
+    dashes = []
+    answer_line = []
 
+    for expression in problems:
+        parts = expression.split()
         if len(parts) != 3:
-            return "Error: Invalid problem format."
+            return "Error: Each problem must have two operands and an operator."
 
-        num1, operator, num2 = parts
+        operand1, operator, operand2 = parts
 
-        if operator not in ['+', '-']:
-            return "Error: Operator must be '+' or '-'."
-
-        if not (num1.isdigit() and num2.isdigit()):
+        if not operand1.isdigit() or not operand2.isdigit():
             return "Error: Numbers must only contain digits."
-
-        if len(num1) > 4 or len(num2) > 4:
+        if operator not in operations:
+            return "Error: Operator must be '+' or '-'."
+        if len(operand1) > 4 or len(operand2) > 4:
             return "Error: Numbers cannot be more than four digits."
 
-        max_len = max(len(num1), len(num2)) + 2
-        top = num1.rjust(max_len)
-        bottom = operator + num2.rjust(max_len - 1)
-        dash = '-' * max_len
+        width = max(len(operand1), len(operand2)) + 2
 
-        if operator == '+':
-            result = str(int(num1) + int(num2)).rjust(max_len)
-        else:
-            result = str(int(num1) - int(num2)).rjust(max_len)
+        first_line.append(operand1.rjust(width))
+        second_line.append(operator + ' ' + operand2.rjust(width - 2))
+        dashes.append('-' * width)
 
-        spacer = "    " if i < len(problems) - 1 else ""
+        if answers:
+            result = operations[operator]([int(operand1), int(operand2)])
+            answer_line.append(result.rjust(width))
 
-        first_line += top + spacer
-        second_line += bottom + spacer
-        dashes += dash + spacer
-        results += result + spacer
+    output = '    '.join(first_line) + '\n' + '    '.join(second_line) + '\n' + '    '.join(dashes)
+    if answers:
+        output += '\n' + '    '.join(answer_line)
 
-    arranged_problems = first_line + "\n" + second_line + "\n" + dashes
-    if display_answers:
-        arranged_problems += "\n" + results
+    return output
 
-    return arranged_problems
 
-# Add this at the bottom
+# --------- MAIN EXECUTION ---------
+
 if __name__ == "__main__":
-    problems = ["32 + 698", "3801 - 2", "45 + 43", "123 + 49"]
-    print(arithmetic_arranger(problems, display_answers=True))
+    print("Enter arithmetic problems separated by comma, semicolon, or space.")
+    print("Example: 32+8, 1-3801; 9999+9999 523-49\n")
+
+    raw_input_line = input("Enter problems: ").replace(';', ',').strip()
+    raw_expressions = [exp.strip() for exp in raw_input_line.replace(',', ' ').split('  ') if exp.strip()]
+
+    cleaned_problems = []
+    for raw in raw_expressions:
+        parts = []
+        buffer = ''
+        for char in raw:
+            if char in '+-':
+                if buffer:
+                    parts.append(buffer.strip())
+                parts.append(char)
+                buffer = ''
+            else:
+                buffer += char
+        if buffer:
+            parts.append(buffer.strip())
+
+        if len(parts) == 3:
+            cleaned_problems.append(' '.join(parts))
+        else:
+            print(f"Skipping malformed input: {raw}")
+
+    if not cleaned_problems:
+        print("No valid problems found.")
+    else:    
+        print("\n Arranged Problems with Answers:\n")
+        print(arithmetic_arranger(cleaned_problems, answers=True))
